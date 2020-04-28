@@ -1,0 +1,21 @@
+h1{
+    text-align: center;
+}
+
+#start-button{
+    width: 200px;
+    padding: 10px 40px;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+
+
+canvas {
+    border: 1px solid red ;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+

@@ -1,8 +1,9 @@
-# (Nombre del juego)
+# Ice Cream Storm
 
 ## Descripción
 
 Caen varias bolas de helado de distintos colores,  y el objetivo es juntar 3 bolas de helado del mismo sabor y asi se va acumulando puntos cada 30 segundos las bolas de helado caen más rápido. 
+
 Tecnologías: javascript /html/css
 
 ## Reglas del juego  
@@ -30,7 +31,7 @@ El usuario tiene 3 vidas.
 ### Git
 Repositorio: https://github.com/lauraramirezencinas/juego.git
 ​
-// Deploy:
+//Deploy:
 ​
 ### Slides
  
