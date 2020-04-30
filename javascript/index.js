@@ -1,24 +1,24 @@
 var gameStarted = false
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
+const colores = ["#f00", "#56E884", "#6881FF", "#EF50FF"]
 
 const juego = {
-    //color="",
+    color: "",
     bolas: [],
-    //bolasRecolectadas=[],
+    bolasRecolectadas: [],
     nivel: 0,
     contadorTick: 0,
     velocidad: 100,
     vidas: 3,
-
+    puntos:0,
 
 
     tick: function () {
         this.nivel = parseInt(this.contadorTick / 100)
+        let bola = new BolaDeHelado;
         juego.bolas.forEach(el => el.moverBola());
-        if (this.contadorTick % 10== 0){
-            let bola = new BolaDeHelado;
+        if (this.contadorTick % 10 == 0) {
             juego.bolas.push(bola);
         }
         this.render();
@@ -28,7 +28,7 @@ const juego = {
         this.contadorTick++;
         juego.checkCollision();
 
-        //window.requestAnimationFrame(tick);
+        //window.requestAnimationFrame(this.render());
     },
 
     render: function () {
@@ -37,10 +37,16 @@ const juego = {
             el.pintarBola()
         });
         cono.dibujoCono();
+        juego.bolasRecolectadas.forEach((bola,index)=> {
+            bola.x = cono.x; 
+            bola.y = cono.y- 65 - (index*30);
+            bola.pintarBola();
+        });
+        //window.requestAnimationFrame(juego.tick);
     },
 
     collision: function (cono, bola) {
-        let collisionX = (bola.x - 15) < cono.x  && (bola.x + 15) > cono.x;
+        let collisionX = (bola.x - 15) < cono.x && (bola.x + 15) > cono.x;
         let collisionY = bola.y > (cono.y - 100) && bola.y < cono.y;
 
         if (collisionX && collisionY) {
@@ -53,14 +59,23 @@ const juego = {
     checkCollision: function () {
         juego.bolas.forEach((el, index) => {
             if (juego.collision(cono, el)) {
-                juego.pierdevida();
-                juego.bolas.splice(index,1);
-                console.log("COLISION");
+                if (juego.bolasRecolectadas.length == 0) {
+                    juego.color = el.color;
+                    juego.bolasRecolectadas.push(el);
+                } else if (juego.color == el.color) {
+                    juego.bolasRecolectadas.push(el);
+                    if (juego.bolasRecolectadas.length > 3) {
+                        juego.bolasRecolectadas = [];
+                    }
+                }
+                else {
+                    juego.pierdevida();
+                }
+                juego.bolas.splice(index, 1);
             }
-            // else if (el.y >= cono.y){
-            //     juego.bolas.splice(index,1);
-            // }
-
+            else if (el.y >= cono.y) {
+                juego.bolas.splice(index, 1);
+            }
         });
     },
 
@@ -69,6 +84,14 @@ const juego = {
         let mostrarVida = document.querySelector("#vidas")
         mostrarVida.innerHTML = juego.vidas;
     },
+
+    sumarPuntos: function (){
+        if (juego.bolasRecolectadas == 3){
+            puntos +=1 
+        }
+    }, 
+
+    //gameOver: function(){}   
 }
 
 
@@ -88,6 +111,7 @@ const cono = {
     dibujoCono() {
         ctx.lineWidth = 3;
         ctx.beginPath();
+        ctx.strokeStyle = "#000"
         ctx.moveTo(this.x, 650);
         ctx.lineTo(this.x - 25, 600);
         ctx.lineTo(this.x + 25, 600);
@@ -120,13 +144,13 @@ class BolaDeHelado {
     constructor() {
         this.x = Math.floor(Math.random() * 500 - 50);
         this.y = 10;
-        this.vel = 3;
-
+        this.vel = 5;
+        this.color = colores[Math.floor(Math.random() * (colores.length))]
     }
     pintarBola() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, 15, 0, (Math.PI / 180) * 360);
-        ctx.strokeStyle = "#f00";
+        ctx.strokeStyle = this.color;
         ctx.lineWidth = 10;
         ctx.closePath();
         ctx.stroke();
