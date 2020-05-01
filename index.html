@@ -16,25 +16,27 @@
 <body>
 
 
-    <!--<main class="container"></main>
-        <script type="text/javascript" src="javascript/main.js"></script>
-     <img scr="./imagenes/" alt="imagen-principal" class="logo-img" />  
-     <div >Nivel: <span id="nivel"></span></div> -->
-
     <div class="first-part">
         <h1>Ice Cream Storm</h1>
         <br />
-        <div >VIDAS: <span id="vidas"></span></div>
-
-        <br />
         <button id="start-button">StartGame</button>
-        
-    </div>
-    <div id="game">
-        <canvas id="canvas" width="500" height="700"></canvas>
-       
     </div>
 
+    <div id="game">
+        <p>VIDAS: <span id="vidas"></span></p>
+        <p>PUNTOS: <span id="puntos"></span></p>
+       
+         
+    </div>
+    <div>
+        <canvas id="canvas" width="500" height="700"></canvas>
+    </div>
+
+    <div id="game-over">
+        <h1>GAME OVER </h1>
+        <button id="restart-button">Restart</button>
+    </div>
+    </div>
 
     <script type="text/javascript" src="javascript/index.js"></script>
 

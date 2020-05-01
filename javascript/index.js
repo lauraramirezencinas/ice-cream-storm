@@ -3,6 +3,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const colores = ["#f00", "#56E884", "#6881FF", "#EF50FF"]
 
+
 const juego = {
     color: "",
     bolas: [],
@@ -10,8 +11,8 @@ const juego = {
     nivel: 0,
     contadorTick: 0,
     velocidad: 100,
-    vidas: 3,
-    puntos:0,
+    vidas: 2,
+    puntos: 0,
 
 
     tick: function () {
@@ -28,7 +29,6 @@ const juego = {
         this.contadorTick++;
         juego.checkCollision();
 
-        //window.requestAnimationFrame(this.render());
     },
 
     render: function () {
@@ -36,10 +36,11 @@ const juego = {
         this.bolas.forEach(function (el) {
             el.pintarBola()
         });
-        cono.dibujoCono();
-        juego.bolasRecolectadas.forEach((bola,index)=> {
-            bola.x = cono.x; 
-            bola.y = cono.y- 65 - (index*30);
+        cono.inicializarCono ();
+        cono.mostrarCono();
+        juego.bolasRecolectadas.forEach((bola, index) => {
+            bola.x = cono.x;
+            bola.y = cono.y - 30 - (index * 30);
             bola.pintarBola();
         });
         //window.requestAnimationFrame(juego.tick);
@@ -60,11 +61,12 @@ const juego = {
         juego.bolas.forEach((el, index) => {
             if (juego.collision(cono, el)) {
                 if (juego.bolasRecolectadas.length == 0) {
-                    juego.color = el.color;
+                    juego.color = el.imagenBola;
                     juego.bolasRecolectadas.push(el);
-                } else if (juego.color == el.color) {
+                } else if (juego.color == el.imagenBola) {
                     juego.bolasRecolectadas.push(el);
                     if (juego.bolasRecolectadas.length > 3) {
+                        juego.sumarPuntos();
                         juego.bolasRecolectadas = [];
                     }
                 }
@@ -75,6 +77,8 @@ const juego = {
             }
             else if (el.y >= cono.y) {
                 juego.bolas.splice(index, 1);
+            } else if (this.vidas == 0) {
+                this.gameOver()
             }
         });
     },
@@ -85,46 +89,47 @@ const juego = {
         mostrarVida.innerHTML = juego.vidas;
     },
 
-    sumarPuntos: function (){
-        if (juego.bolasRecolectadas == 3){
-            puntos +=1 
-        }
-    }, 
+    sumarPuntos: function () {
+       // if (juego.bolasRecolectadas.length == 3) {
+            juego.puntos += 1;
+        //}
+        let mostrarPuntos = document.querySelector("#puntos")
+        mostrarPuntos.innerHTML = juego.puntos;
+    },
 
-    //gameOver: function(){}   
+    gameOver: function () {
+        document.querySelector('#canvas').style.display = 'none';
+        document.querySelector('#game-over').style.display = 'block';
+        document.querySelector('#restart-button').style.display = 'block';
+
+    },
 }
 
 
 let mostrarVida = document.querySelector("#vidas")
 mostrarVida.innerHTML = juego.vidas;
-
+let mostrarPuntos = document.querySelector("#puntos")
+mostrarPuntos.innerHTML = juego.puntos;
 
 
 
 const cono = {
-    //img : new Image
+    img : new Image,
     x: 250,
-    y: 650,
+    y: 600,
     speed: 20,
 
+    inicializarCono () {
+       this.img = new Image();
+       this.img.src = "../imagenes/cono2.png";
+       this.width = 50;
+       this.height = 100;    
+    }, 
 
-    dibujoCono() {
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.strokeStyle = "#000"
-        ctx.moveTo(this.x, 650);
-        ctx.lineTo(this.x - 25, 600);
-        ctx.lineTo(this.x + 25, 600);
-        ctx.closePath();
-        ctx.stroke();
-    },
+     mostrarCono(){
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+     },
 
-    //inicializar: function () {
-    //    this.img = new Image();
-    //    this.img.src = "/images/car.png";
-    //    this.width = 50;
-    //    this.height = 100;
-    //  },
 
     trataEventoTeclado(evento) {
         console.log(evento);
@@ -145,28 +150,47 @@ class BolaDeHelado {
         this.x = Math.floor(Math.random() * 500 - 50);
         this.y = 10;
         this.vel = 5;
-        this.color = colores[Math.floor(Math.random() * (colores.length))]
+        this.width = 50;
+        this.height = 50; 
+        //this.color = colores[Math.floor(Math.random() * (colores.length))]
+        this.imagenBola=listaBolas[Math.floor(Math.random() * (listaBolas.length))]
     }
+
+
     pintarBola() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 15, 0, (Math.PI / 180) * 360);
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = 10;
-        ctx.closePath();
-        ctx.stroke();
+        ctx.drawImage(this.imagenBola, this.x, this.y, this.width, this.height);
     }
+
     moverBola() {
         this.y += this.vel;
     }
 }
 
+const bola1= new Image(); 
+bola1.src="../imagenes/helado1.png";
 
+const bola2= new Image(); 
+bola2.src="../imagenes/helado2.png";
+    
+const bola3= new Image(); 
+bola3.src="../imagenes/helado3.png";
+
+const bola4= new Image(); 
+bola4.src="../imagenes/helado4.png"; 
+
+const bola5= new Image(); 
+bola5.src="../imagenes/helado5.png"; 
+
+const bola6= new Image(); 
+bola6.src="../imagenes/helado6.png"; 
+    
+const listaBolas=[bola1, bola2, bola3,bola5,bola6];
 
 function startGame() {
-    if (gameStarted) {
-        return
-    }
-    gameStarted = true;
+    // if (gameStarted) {
+    //     return
+    // }
+    // gameStarted = true;
     juego.tick();
 
 }
@@ -174,12 +198,21 @@ function startGame() {
 function ocultar() {
     document.querySelector('#start-button').style.display = 'none';
     document.querySelector('#canvas').style.display = 'block';
+    //document.querySelector('#restart-button').style.display = 'none';
 }
 
 
 window.onload = () => {
     document.getElementById('start-button').onclick = () => {
         ocultar();
+        startGame();
+    };
+
+    document.getElementById('restart-button').onclick = () => {
+        gameStarted = false;
+       // document.querySelector('#canvas').style.display = 'block';
+        //document.querySelector('#game-over').style.display = 'block';
+        //document.querySelector('#restart-button').style.display = 'block';
         startGame();
     };
 
@@ -190,5 +223,6 @@ window.onload = () => {
         }
     }
 };
+
 
 
