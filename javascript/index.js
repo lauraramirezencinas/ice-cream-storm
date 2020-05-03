@@ -32,7 +32,7 @@ const juego = {
     nivel: 0,
     contadorTick: 0,
     velocidad: 50,
-    vidas: 1,
+    vidas: 2,
     puntos: 0,
     timer: null,
     frecuencia: 20,
@@ -114,6 +114,9 @@ const juego = {
                 }
                 else {
                     juego.pierdevida();
+                setTimeout(function(){
+                    ctx.body.style.backgroundColor = "red";
+                },1000);
                 }
                 juego.bolas.splice(index, 1);
             }
@@ -129,6 +132,7 @@ const juego = {
         juego.vidas -= 1;
         let mostrarVida = document.querySelector("#vidas")
         mostrarVida.innerHTML = juego.vidas;
+        
     },
 
     sumarPuntos: function () {

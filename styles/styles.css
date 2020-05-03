@@ -14,7 +14,7 @@ button{
 
 
 canvas {
-    background-color: rgb(245, 244, 244, 0.85);
+    background-color: rgb(243, 233,198, 0.75);
     margin-top: -125px;
     display:block;
     margin-left: auto;
@@ -27,7 +27,10 @@ canvas {
 body{
     background-image: url("../imagenes/fondo.jpg")
 }
-
+ #titulo{
+     display: flex;
+     align-items: center;
+ }
 
 #game-over {
     display: none; 
@@ -36,7 +39,7 @@ body{
 
 #game {
     display: none; 
-    background-color:rgb(245, 244, 244);
+    background-color:rgb(243, 233,198, 0.75);
     width: 345px;
     margin-left: 50px;
     padding: 20px 50px;
