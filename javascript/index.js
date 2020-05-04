@@ -1,6 +1,12 @@
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+// const audio = document.getElementById("audio");
+// audio.volume = 0.5;
+// function generateMusic() {
+//   return audio.paused ? audio.play() : audio.pause();
+// };
+//document.getElementById("countdown").innerText ="0:20";
 
 const bola1 = new Image();
 bola1.src = "../imagenes/helado1.png";
@@ -20,9 +26,14 @@ bola5.src = "../imagenes/helado5.png";
 const bola6 = new Image();
 bola6.src = "../imagenes/helado6.png";
 
+const bolaComodin1 = new Image();
+bolaComodin1.src = "../imagenes/bolaComod.png";
+
+const bolaComodin2 = new Image();
+bolaComodin2.src = "../imagenes/bolaComodin.png";
+
 const listaBolas = [bola1, bola2, bola3, bola5, bola6];
-
-
+const listaBolasComodin = [bolaComodin1, bolaComodin2];
 
 
 const juego = {
@@ -36,39 +47,45 @@ const juego = {
     puntos: 0,
     timer: null,
     frecuencia: 20,
-    
-    incrementarNivel: function(){
-        const newLevel=parseInt(this.contadorTick / 100);
-        if(this.nivel !=newLevel ){
+    frecuenciaBolaComodin: 100,
+
+    incrementarNivel: function () {
+        const newLevel = parseInt(this.contadorTick / 100);
+        if (this.nivel != newLevel) {
             juego.nivel = newLevel;
-            juego.frecuencia-=1; 
+            juego.frecuencia -= 1;
         }
         let mostrarNivel = document.querySelector("#nivel")
         mostrarNivel.innerHTML = juego.nivel;
     },
 
-    crearBola:function(){
-        let bola = new BolaDeHelado;
+    crearBola: function () {
         juego.bolas.forEach(el => el.moverBola());
         if (this.contadorTick % this.frecuencia == 0) {
+            let bola = new BolaDeHelado(false);
             juego.bolas.push(bola);
         }
 
     },
 
+    crearBolaComodin: function () {
+        if (this.contadorTick % this.frecuenciaBolaComodin == 0) {
+            let bolaComodin = new BolaDeHelado(true);
+            juego.bolas.push(bolaComodin);
+        }
+    },
+
     tick: function () {
         this.incrementarNivel();
         this.crearBola();
+        this.crearBolaComodin();
         this.render();
         this.timer = setTimeout(function () {
-            juego.tick();    
+            juego.tick();
         }, this.velocidad - this.nivel * 5);
         this.contadorTick++;
         juego.checkCollision();
     },
-
-    
-    
 
     render: function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -85,7 +102,6 @@ const juego = {
     },
 
 
-
     collision: function (cono, bola) {
         let collisionX = (bola.x - 15) < cono.x && (bola.x + 15) > cono.x;
         let collisionY = bola.y > (cono.y - 100) && bola.y < cono.y;
@@ -100,26 +116,33 @@ const juego = {
     checkCollision: function () {
         juego.bolas.forEach((el, index) => {
             if (juego.collision(cono, el)) {
-                if (juego.bolasRecolectadas.length == 0) {
-                    juego.color = el.imagenBola;
-                    juego.bolasRecolectadas.push(el);
-                } else if (juego.color == el.imagenBola) {
-                    juego.bolasRecolectadas.push(el);
-                    if (juego.bolasRecolectadas.length === 3) {
-                        juego.sumarPuntos();
-                        setTimeout(function () {
-                            juego.bolasRecolectadas = [];
-                        }, 1000)
+                if (el.tipo < 0) {
+                    if (juego.bolasRecolectadas.length == 0) {
+                        juego.color = el.imagenBola;
+                        juego.bolasRecolectadas.push(el);
+                    } else if (juego.color == el.imagenBola) {
+                        juego.bolasRecolectadas.push(el);
+                        if (juego.bolasRecolectadas.length === 3) {
+                            juego.sumarPuntos();
+                            setTimeout(function () {
+                                juego.bolasRecolectadas = [];
+                            }, 1000)
+                        }
+                    }
+                    else {
+                        juego.pierdevida();
+                        // setTimeout(function(){
+                        //     ctx.body.style.backgroundColor = "red";
+                        // },1000);
                     }
                 }
                 else {
-                    juego.pierdevida();
-                setTimeout(function(){
-                    ctx.body.style.backgroundColor = "red";
-                },1000);
+                    juego.sumarvida();
                 }
+
                 juego.bolas.splice(index, 1);
             }
+            //
             else if (el.y >= cono.y) {
                 juego.bolas.splice(index, 1);
             } else if (this.vidas == 0) {
@@ -128,12 +151,21 @@ const juego = {
         });
     },
 
+
     pierdevida: function () {
         juego.vidas -= 1;
         let mostrarVida = document.querySelector("#vidas")
         mostrarVida.innerHTML = juego.vidas;
-        
+
     },
+
+    sumarvida: function () {
+        juego.vidas += 1;
+        let mostrarVida = document.querySelector("#vidas")
+        mostrarVida.innerHTML = juego.vidas;
+
+    },
+
 
     sumarPuntos: function () {
         if (juego.bolasRecolectadas.length == 3) {
@@ -141,12 +173,13 @@ const juego = {
         }
         let mostrarPuntos = document.querySelector("#puntos")
         mostrarPuntos.innerHTML = juego.puntos;
-        
+
     },
 
     gameOver: function () {
         clearTimeout(this.timer);
         document.querySelector('#canvas').style.display = 'none';
+        document.querySelector('#game').style.display = 'none';
         document.querySelector('#game-over').style.display = 'block';
         document.querySelector('#restart-button').style.display = 'block';
 
@@ -190,7 +223,6 @@ const cono = {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     },
 
-
     trataEventoTeclado(evento) {
         console.log(evento);
         if (evento.code == "ArrowRight") {
@@ -204,17 +236,22 @@ const cono = {
 }
 
 
-
 class BolaDeHelado {
-    constructor() {
+    constructor(comodin) {
         this.x = Math.floor(Math.random() * 460 + 10);
         this.y = 10;
         this.vel = 5;
         this.width = 50;
         this.height = 50;
-        this.imagenBola = listaBolas[Math.floor(Math.random() * (listaBolas.length))]
-    }
 
+        if (comodin) {
+            this.tipo = Math.floor(Math.random() * (listaBolasComodin.length));
+            this.imagenBola = listaBolasComodin[this.tipo];
+        } else {
+            this.tipo = -1;
+            this.imagenBola = listaBolas[Math.floor(Math.random() * (listaBolas.length))];
+        }
+    }
 
     pintarBola() {
         ctx.drawImage(this.imagenBola, this.x, this.y, this.width, this.height);
@@ -227,8 +264,9 @@ class BolaDeHelado {
 
 
 
+
 function ocultar() {
-    document.querySelector('#title').style.display = 'none';
+    document.querySelector('#imagen-titulo').style.display = 'none';
     document.querySelector('#start-button').style.display = 'none';
     document.querySelector('#canvas').style.display = 'block';
     document.querySelector('#game').style.display = 'block';

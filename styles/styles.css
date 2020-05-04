@@ -10,12 +10,18 @@ button{
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 50px;
+    background-color: #f45775;
+    color: white;
+    font-size: 25px;
+    padding: 13px 0px;
+    border: 2px solid white;
 }
 
 
 canvas {
     background-color: rgb(243, 233,198, 0.75);
     margin-top: -125px;
+    margin-bottom: 80px;
     display:block;
     margin-left: auto;
     margin-right: auto;
@@ -27,9 +33,10 @@ canvas {
 body{
     background-image: url("../imagenes/fondo.jpg")
 }
- #titulo{
-     display: flex;
-     align-items: center;
+ #imagen-titulo{
+    display: block;
+    margin: auto;  
+    margin-top: 280px;
  }
 
 #game-over {
@@ -40,8 +47,14 @@ body{
 #game {
     display: none; 
     background-color:rgb(243, 233,198, 0.75);
-    width: 345px;
+    width: 285px;
     margin-left: 50px;
     padding: 20px 50px;
     margin-top: 80px;
+}
+
+#game-over-imagen{
+    display: block;
+    margin: auto;
+    width: 35%;
 }

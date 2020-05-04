@@ -6,19 +6,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="styles/styles.css" />
-
-
-
-
-
 </head>
 
 <body>
-
-
     <div class="first-part">
-        <h1>ICE CREAM STORM</h1>
-        <img id="titulo" src="../imagenes/rosa.png">
+
+        <img id="imagen-titulo" src="../imagenes/rosa.png">
         <br />
         <button id="start-button">StartGame</button>
     </div>
@@ -27,15 +20,17 @@
         <p>VIDAS: <span id="vidas"></span></p>
         <p>PUNTOS: <span id="puntos"></span></p>
         <p>NIVEL: <span id="nivel"></span></p>
-       
-         
+        <div id="countdown"></div>
     </div>
     <div>
         <canvas id="canvas" width="500" height="700"></canvas>
+        <!-- <audio id="loop" controls>
+            <source type="audio/wav" src="audio/funky.wav" allow="autoplay">
+        </audio> -->
     </div>
 
     <div id="game-over">
-        <h1>GAME OVER </h1>
+        <img id="game-over-imagen" src="../imagenes/game-over.png">
         <button id="restart-button">Restart</button>
     </div>
     </div>
