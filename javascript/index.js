@@ -9,7 +9,7 @@ const ctx = canvas.getContext('2d');
 //document.getElementById("countdown").innerText ="0:20";
 
 const bola1 = new Image();
-bola1.src = "../imagenes/helado1.png";
+bola1.src = "/../imagenes/helado1.png";
 
 const bola2 = new Image();
 bola2.src = "../imagenes/helado2.png";
