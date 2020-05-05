@@ -27,10 +27,10 @@ const bola6 = new Image();
 bola6.src = "../imagenes/helado6.png";
 
 const bolaComodin1 = new Image();
-bolaComodin1.src = "../imagenes/bolaComod.png";
+bolaComodin1.src = "../imagenes/comodin1.png";
 
 const bolaComodin2 = new Image();
-bolaComodin2.src = "../imagenes/bolaComodin.png";
+bolaComodin2.src = "../imagenes/comodin2.png";
 
 const listaBolas = [bola1, bola2, bola3, bola5, bola6];
 const listaBolasComodin = [bolaComodin1, bolaComodin2];
@@ -48,12 +48,15 @@ const juego = {
     timer: null,
     frecuencia: 20,
     frecuenciaBolaComodin: 100,
+    comodinActivado: false,
 
     incrementarNivel: function () {
         const newLevel = parseInt(this.contadorTick / 100);
         if (this.nivel != newLevel) {
             juego.nivel = newLevel;
-            juego.frecuencia -= 1;
+            if (juego.frecuencia > 13) {
+                juego.frecuencia -= 1;
+            }
         }
         let mostrarNivel = document.querySelector("#nivel")
         mostrarNivel.innerHTML = juego.nivel;
@@ -80,9 +83,13 @@ const juego = {
         this.crearBola();
         this.crearBolaComodin();
         this.render();
+        var vel =this.velocidad - this.nivel * 5;
+        if (vel < 25){
+            vel = 25;
+        }
         this.timer = setTimeout(function () {
             juego.tick();
-        }, this.velocidad - this.nivel * 5);
+        },vel);
         this.contadorTick++;
         juego.checkCollision();
     },
@@ -103,7 +110,7 @@ const juego = {
 
 
     collision: function (cono, bola) {
-        let collisionX = (bola.x - 15) < cono.x && (bola.x + 15) > cono.x;
+        let collisionX = ((bola.x /2)- 30) < cono.x/2 && ((bola.x /2) +30) > cono.x/2;
         let collisionY = bola.y > (cono.y - 100) && bola.y < cono.y;
 
         if (collisionX && collisionY) {
@@ -126,7 +133,7 @@ const juego = {
                             juego.sumarPuntos();
                             setTimeout(function () {
                                 juego.bolasRecolectadas = [];
-                            }, 1000)
+                            }, 300)
                         }
                     }
                     else {
@@ -136,8 +143,22 @@ const juego = {
                         // },1000);
                     }
                 }
-                else {
+                else if (el.tipo == 0) {
                     juego.sumarvida();
+                }
+                else if (el.tipo == 1) {
+                    if (juego.bolasRecolectadas.length == 0) {
+                        return
+                    } else {
+                        juego.bolas.forEach(function (bola) {
+                            bola.imagenBola = juego.color;
+                        })
+                        juego.comodinActivado = true;
+                        setTimeout(function () {
+                            juego.comodinActivado = false;
+                            juego.sumarPuntos();
+                        }, 5000)
+                    }
                 }
 
                 juego.bolas.splice(index, 1);
@@ -210,7 +231,7 @@ const cono = {
     img: new Image,
     x: 250,
     y: 600,
-    speed: 20,
+    speed: 25,
 
     inicializarCono() {
         this.img = new Image();
@@ -224,7 +245,7 @@ const cono = {
     },
 
     trataEventoTeclado(evento) {
-        console.log(evento);
+        console.log(this.x);
         if (evento.code == "ArrowRight") {
             this.x += this.speed;
         }
@@ -249,7 +270,11 @@ class BolaDeHelado {
             this.imagenBola = listaBolasComodin[this.tipo];
         } else {
             this.tipo = -1;
-            this.imagenBola = listaBolas[Math.floor(Math.random() * (listaBolas.length))];
+            if (juego.comodinActivado) {
+                this.imagenBola = juego.color;
+            } else {
+                this.imagenBola = listaBolas[Math.floor(Math.random() * (listaBolas.length))];
+            }
         }
     }
 
@@ -290,8 +315,11 @@ window.onload = () => {
 
     document.onkeydown = function (event) {
         cono.trataEventoTeclado(event);
-        if (cono.x < 0 || cono.x > 470) {
+        if (cono.x < 0 || cono.x >= 475) {
+            console.log("cono.x"+ cono.x)
             cono.x = -cono.x;
+            console.log("cono.x - "+ cono.x)
+
         }
     }
 }

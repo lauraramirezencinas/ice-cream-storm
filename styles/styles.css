@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Pacifico&display=swap');
+
+
 h1{
     text-align: center;
     margin-top: 300px;
@@ -33,6 +36,14 @@ canvas {
 body{
     background-image: url("../imagenes/fondo.jpg")
 }
+
+p{
+    font-family: 'Courgette', cursive;
+    color: #f45775;
+    font-size: 21px;
+}
+
+
  #imagen-titulo{
     display: block;
     margin: auto;  
