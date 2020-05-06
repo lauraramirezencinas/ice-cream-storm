@@ -15,22 +15,22 @@ const bola2 = new Image();
 bola2.src = "imagenes/helado2.png";
 
 const bola3 = new Image();
-bola3.src = "/../imagenes/helado3.png";
+bola3.src = "imagenes/helado3.png";
 
 const bola4 = new Image();
-bola4.src = "../imagenes/helado4.png";
+bola4.src = "imagenes/helado4.png";
 
 const bola5 = new Image();
-bola5.src = "../imagenes/helado5.png";
+bola5.src = "imagenes/helado5.png";
 
 const bola6 = new Image();
-bola6.src = "../imagenes/helado6.png";
+bola6.src = "imagenes/helado6.png";
 
 const bolaComodin1 = new Image();
-bolaComodin1.src = "../imagenes/comodin1.png";
+bolaComodin1.src = "imagenes/comodin1.png";
 
 const bolaComodin2 = new Image();
-bolaComodin2.src = "../imagenes/comodin2.png";
+bolaComodin2.src = "imagenes/comodin2.png";
 
 const listaBolas = [bola1, bola2, bola3, bola5, bola6];
 const listaBolasComodin = [bolaComodin1, bolaComodin2];
