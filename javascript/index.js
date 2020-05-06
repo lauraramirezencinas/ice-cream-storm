@@ -235,7 +235,7 @@ const cono = {
 
     inicializarCono() {
         this.img = new Image();
-        this.img.src = "../imagenes/cono2.png";
+        this.img.src = "imagenes/cono2.png";
         this.width = 50;
         this.height = 100;
     },
