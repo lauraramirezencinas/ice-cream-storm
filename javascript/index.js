@@ -49,14 +49,14 @@ const juego = {
     nivel: 0,
     contadorTick: 0,
     velocidad: 50,
-    vidas: 2,
+    vidas: 3,
     puntos: 0,
-    timer: null,
+    //timer: null,
     frecuencia: 20,
     frecuenciaBolaComodin: 100,
     comodinActivado: false,
-    timer2:null, 
-    
+    timeouts: [],
+
 
     incrementarNivel: function () {
         const newLevel = parseInt(this.contadorTick / 100);
@@ -95,12 +95,12 @@ const juego = {
         if (vel < 25) {
             vel = 25;
         }
-        this.timer = setTimeout(function () {
-            juego.tick();
-        }, vel);
-        // this.timeouts.push(setTimeout(function () {
+        // this.timer = setTimeout(function () {
         //     juego.tick();
-        // }, vel))
+        // }, vel);
+        this.timeouts.push(setTimeout(function () {
+            juego.tick();
+        }, vel))
         this.contadorTick++;
         juego.checkCollision();
     },
@@ -187,9 +187,9 @@ const juego = {
         mostrarVida.innerHTML = juego.vidas;
 
         canvas.style.backgroundColor = "#f45775";
-        this.timer2=setTimeout(function () {
+        this.timeouts.push(setTimeout(function () {
             canvas.style.backgroundColor = "rgb(243, 233,198, 0.75)";
-        }, 100);
+        }, 100));
 
     },
 
@@ -231,8 +231,22 @@ const juego = {
         this.velocidad = 50;
         this.vidas = 3;
         this.puntos = 0;
-        this.timer = null;
+        // this.timer = null;
+        for (var i = 0; i < this.timeouts.length; i++) {
+            clearTimeout(this.timeouts[i]);
+        }
+        this.timeouts = [];
+        let mostrarVida = document.querySelector("#vidas")
+        mostrarVida.innerHTML = juego.vidas;
+        let mostrarPuntos = document.querySelector("#puntos")
+        mostrarPuntos.innerHTML = juego.puntos;
+        let mostrarNivel = document.querySelector("#nivel")
+        mostrarNivel.innerHTML = juego.nivel;
+        let mostrarPuntosGanados = document.querySelector("#puntos-ganados")
+        mostrarPuntosGanados.innerHTML = juego.puntos;
+
     }
+
 }
 
 let mostrarVida = document.querySelector("#vidas")
