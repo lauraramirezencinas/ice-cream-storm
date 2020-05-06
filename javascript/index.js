@@ -9,13 +9,13 @@ const ctx = canvas.getContext('2d');
 //document.getElementById("countdown").innerText ="0:20";
 
 const bola1 = new Image();
-bola1.src = "/../imagenes/helado1.png";
+bola1.src = "imagenes/helado1.png";
 
 const bola2 = new Image();
-bola2.src = "../imagenes/helado2.png";
+bola2.src = "imagenes/helado2.png";
 
 const bola3 = new Image();
-bola3.src = "../imagenes/helado3.png";
+bola3.src = "/../imagenes/helado3.png";
 
 const bola4 = new Image();
 bola4.src = "../imagenes/helado4.png";
