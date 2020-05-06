@@ -43,6 +43,10 @@ p{
     font-size: 21px;
 }
 
+audio{
+    display: none;
+}
+
 
  #imagen-titulo{
     display: block;

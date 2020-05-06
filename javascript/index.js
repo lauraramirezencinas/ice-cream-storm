@@ -1,11 +1,12 @@
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-// const audio = document.getElementById("audio");
-// audio.volume = 0.5;
-// function generateMusic() {
-//   return audio.paused ? audio.play() : audio.pause();
-// };
+const audio = document.getElementById("audio");
+audio.volume = 0.5;
+function generateMusic() {
+  //return audio.paused ? audio.play() : audio.pause();
+  return audio.play();
+};
 //document.getElementById("countdown").innerText ="0:20";
 
 const bola1 = new Image();
@@ -111,7 +112,7 @@ const juego = {
 
     collision: function (cono, bola) {
         let collisionX = ((bola.x /2)- 30) < cono.x/2 && ((bola.x /2) +30) > cono.x/2;
-        let collisionY = bola.y > (cono.y - 100) && bola.y < cono.y;
+        let collisionY = bola.y > (cono.y - 80) && bola.y < cono.y;
 
         if (collisionX && collisionY) {
             return true;
@@ -203,6 +204,7 @@ const juego = {
         document.querySelector('#game').style.display = 'none';
         document.querySelector('#game-over').style.display = 'block';
         document.querySelector('#restart-button').style.display = 'block';
+        audio.pause(); 
 
     },
 
@@ -297,19 +299,25 @@ function ocultar() {
     document.querySelector('#game').style.display = 'block';
 }
 
+function ocultarGameOver(){
+    document.querySelector('#canvas').style.display = 'block';
+    document.querySelector('#game').style.display = 'block';
+    document.querySelector('#game-over').style.display = 'none';
+    document.querySelector('#restart-button').style.display = 'none';
+    
+}
+
 
 window.onload = () => {
     document.getElementById('start-button').onclick = () => {
         ocultar();
+        generateMusic();
         juego.tick();
     }
 
     document.getElementById('restart-button').onclick = () => {
         juego.reiniciar();
-        document.querySelector('#canvas').style.display = 'block';
-        document.querySelector('#game').style.display = 'block';
-        document.querySelector('#game-over').style.display = 'none';
-        document.querySelector('#restart-button').style.display = 'none';
+        ocultarGameOver();
         juego.tick();
     }
 
