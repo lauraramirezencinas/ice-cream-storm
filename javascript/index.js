@@ -4,9 +4,14 @@ const ctx = canvas.getContext('2d');
 const audio = document.getElementById("audio");
 audio.volume = 0.5;
 function generateMusic() {
-  //return audio.paused ? audio.play() : audio.pause();
-  return audio.play();
+    //return audio.paused ? audio.play() : audio.pause();
+    return audio.play();
 };
+
+function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
 //document.getElementById("countdown").innerText ="0:20";
 
 const bola1 = new Image();
@@ -50,6 +55,8 @@ const juego = {
     frecuencia: 20,
     frecuenciaBolaComodin: 100,
     comodinActivado: false,
+    timer2:null, 
+    
 
     incrementarNivel: function () {
         const newLevel = parseInt(this.contadorTick / 100);
@@ -84,13 +91,16 @@ const juego = {
         this.crearBola();
         this.crearBolaComodin();
         this.render();
-        var vel =this.velocidad - this.nivel * 5;
-        if (vel < 25){
+        var vel = this.velocidad - this.nivel * 5;
+        if (vel < 25) {
             vel = 25;
         }
         this.timer = setTimeout(function () {
             juego.tick();
-        },vel);
+        }, vel);
+        // this.timeouts.push(setTimeout(function () {
+        //     juego.tick();
+        // }, vel))
         this.contadorTick++;
         juego.checkCollision();
     },
@@ -111,7 +121,7 @@ const juego = {
 
 
     collision: function (cono, bola) {
-        let collisionX = ((bola.x /2)- 30) < cono.x/2 && ((bola.x /2) +30) > cono.x/2;
+        let collisionX = ((bola.x / 2) - 30) < cono.x / 2 && ((bola.x / 2) + 30) > cono.x / 2;
         let collisionY = bola.y > (cono.y - 80) && bola.y < cono.y;
 
         if (collisionX && collisionY) {
@@ -134,14 +144,11 @@ const juego = {
                             juego.sumarPuntos();
                             setTimeout(function () {
                                 juego.bolasRecolectadas = [];
-                            }, 300)
+                            }, 70)
                         }
                     }
                     else {
                         juego.pierdevida();
-                        // setTimeout(function(){
-                        //     ctx.body.style.backgroundColor = "red";
-                        // },1000);
                     }
                 }
                 else if (el.tipo == 0) {
@@ -179,6 +186,11 @@ const juego = {
         let mostrarVida = document.querySelector("#vidas")
         mostrarVida.innerHTML = juego.vidas;
 
+        canvas.style.backgroundColor = "#f45775";
+        this.timer2=setTimeout(function () {
+            canvas.style.backgroundColor = "rgb(243, 233,198, 0.75)";
+        }, 100);
+
     },
 
     sumarvida: function () {
@@ -204,7 +216,9 @@ const juego = {
         document.querySelector('#game').style.display = 'none';
         document.querySelector('#game-over').style.display = 'block';
         document.querySelector('#restart-button').style.display = 'block';
-        audio.pause(); 
+        let mostrarPuntosGanados = document.querySelector("#puntos-ganados")
+        mostrarPuntosGanados.innerHTML = juego.puntos;
+        audio.pause();
 
     },
 
@@ -214,7 +228,7 @@ const juego = {
         this.bolasRecolectadas = [];
         this.nivel = 0;
         this.contadorTick = 0;
-        this.velocidad = 100;
+        this.velocidad = 50;
         this.vidas = 3;
         this.puntos = 0;
         this.timer = null;
@@ -227,6 +241,8 @@ let mostrarPuntos = document.querySelector("#puntos")
 mostrarPuntos.innerHTML = juego.puntos;
 let mostrarNivel = document.querySelector("#nivel")
 mostrarNivel.innerHTML = juego.nivel;
+let mostrarPuntosGanados = document.querySelector("#puntos-ganados")
+mostrarPuntosGanados.innerHTML = juego.puntos;
 
 
 const cono = {
@@ -297,14 +313,16 @@ function ocultar() {
     document.querySelector('#start-button').style.display = 'none';
     document.querySelector('#canvas').style.display = 'block';
     document.querySelector('#game').style.display = 'block';
+    document.querySelector('#instrucciones').style.display = 'none';
 }
 
-function ocultarGameOver(){
+function ocultarGameOver() {
     document.querySelector('#canvas').style.display = 'block';
     document.querySelector('#game').style.display = 'block';
     document.querySelector('#game-over').style.display = 'none';
     document.querySelector('#restart-button').style.display = 'none';
-    
+    document.querySelector('#puntos-ganados').style.display = 'none';
+
 }
 
 
@@ -318,16 +336,16 @@ window.onload = () => {
     document.getElementById('restart-button').onclick = () => {
         juego.reiniciar();
         ocultarGameOver();
+        generateMusic();
         juego.tick();
     }
 
     document.onkeydown = function (event) {
         cono.trataEventoTeclado(event);
-        if (cono.x < 0 || cono.x >= 475) {
-            console.log("cono.x"+ cono.x)
+        if (cono.x < 0) {
             cono.x = -cono.x;
-            console.log("cono.x - "+ cono.x)
-
+        } else if (cono.x >= 475) {
+            cono.x = 460;
         }
     }
 }

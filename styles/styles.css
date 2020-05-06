@@ -73,3 +73,65 @@ audio{
     margin: auto;
     width: 35%;
 }
+
+#instrucciones{
+    font-family: 'Courgette', cursive;
+    color: #f45775;
+    display: block;
+    text-align: center;    
+    font-size: 26px;
+    padding-top: 23px;    
+}
+
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .popup .popuptext {
+    visibility: hidden;
+    width: 700px;
+    background-color: #ac848be8;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 30%;
+    font-size: 23px;
+  }
+  
+  .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+
+  #puntos-ganados{
+    font-family: 'Courgette', cursive;
+    color: #f45775;
+    font-size: 28px;
+    text-align: center;
+    display: block;
+  }
+
+  #puntos-game-over{
+    text-align: center;
+    display: block;
+    font-size: 28px;
+  }
