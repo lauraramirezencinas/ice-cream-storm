@@ -14,7 +14,7 @@
 
         <img id="imagen-titulo" src="imagenes/rosa.png">
         <br />
-        <button id="start-button">StartGame</button>
+        <button class="boton-principal" id="start-button">StartGame</button>
         <div class="popup" id="instrucciones" onclick="myFunction()">Instrucciones
             <span class="popuptext" id="myPopup">Debes recolectar 3 bolas de helado del mismo color con el cono, y ganas
                 1 punto.
@@ -24,7 +24,6 @@
                 El cono se mueve de izquierda a derecha con las flechas del teclado.
                 <img src="imagenes/izquierda.png" height="40px" />
                 <img src="imagenes/derecha.png" height="40px" />
-
                 </br>
                 Si chocas con una bola de helado de otro color pierdes una vida.
                 </br>
@@ -47,10 +46,15 @@
         <p>PUNTOS: <span id="puntos"></span></p>
         <p>NIVEL: <span id="nivel"></span></p>
         <p id="countdown"></p>
+    </br>
+    <button id="boton-music">
+        <input type=image src="imagenes/technology.png" height="30px">
+    </button>
+
     </div>
     <div>
         <canvas id="canvas" width="500" height="700"></canvas>
-        <audio id="audio1" controls>
+        <audio controls loop="true" id="audio1" controls>
             <source src="music/sonido.mp3">
         </audio>
         <audio id="audio2" controls>
@@ -65,7 +69,7 @@
     <div id="game-over">
         <img id="game-over-imagen" src="imagenes/game-over.png">
         <p id ="puntos-game-over">PUNTOS <span id="puntos-ganados"></span></p>
-        <button id="restart-button">Restart</button>
+        <button class="boton-principal"  id="restart-button">Restart</button>
     </div>
     </div>
     <script type="text/javascript" src="javascript/juego.js"></script>

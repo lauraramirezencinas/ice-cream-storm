@@ -86,7 +86,7 @@ function ocultarGameOver() {
 window.onload = () => {
     document.getElementById('start-button').onclick = () => {
         ocultar();
-        audio1.play()
+        audio1.play();
         juego.tick();
     }
 
@@ -94,8 +94,12 @@ window.onload = () => {
         let mostrarPuntosGanados = document.querySelector("#puntos-ganados")
         mostrarPuntosGanados.innerHTML = juego.puntos;
         ocultarGameOver();
-        audio1.play()
+        audio1.play();
         juego.tick();
+    }
+
+    document.getElementById('boton-music').onclick = () => { 
+        return audio1.paused ? audio1.play() : audio1.pause();
     }
 
     document.onkeydown = function (event) {

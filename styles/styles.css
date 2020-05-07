@@ -5,8 +5,7 @@ h1{
     text-align: center;
     margin-top: 300px;
 }
-
-button{
+.boton-principal  {
     width: 200px;
     padding: 10px 40px;
     display:block;
@@ -19,6 +18,7 @@ button{
     padding: 13px 0px;
     border: 2px solid white;
 }
+
 
 
 canvas {
@@ -142,3 +142,10 @@ audio{
     padding: 7px 15px;
     
   }
+
+  #boton-music{
+    border: none;
+    background-color: rgb(243, 233,198, 0.75);
+    margin-top: 30px;
+}
+  

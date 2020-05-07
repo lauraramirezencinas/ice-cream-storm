@@ -11,7 +11,8 @@ const juego = {
     frecuenciaBolaComodin: 100,
     comodinActivado: false,
     timeouts: [],
-    comodinTimer: 0,
+    timeInterval:[],
+    comodinTimer: 5,
 
     //Incrementa el nivel y el numero de bolas creadas (frecuencia)
     incrementarNivel: function () {
@@ -130,10 +131,11 @@ const juego = {
                         juego.comodinTimer = 5;
                         juego.interval = setInterval(function () {
                             juego.comodinTimer--;
+                            console.log(juego.comodinTimer)
                         }, 1000);
+                        //this.timeInterval.push(juego.interval);
                         this.timeouts.push(setTimeout(function () {
                             juego.comodinActivado = false;
-                            juego.sumarPuntos();
                             clearInterval(juego.interval);
                         }, 5000))
                     }
@@ -210,12 +212,16 @@ const juego = {
         this.velocidad = 50;
         this.vidas = 3;
         this.puntos = 0;
-        for (var i = 0; i < this.timeouts.length; i++) {
+        for (let i = 0; i < this.timeouts.length; i++) {
             clearTimeout(this.timeouts[i]);
         }
         canvas.style.backgroundColor = "rgb(243, 233,198, 0.75)";
         this.timeouts = [];
-        clearInterval(juego.interval)
+        this.comodinTimer= 5;
+        for (let i = 0; i < this.timeInterval.length; i++) {
+            clearInterval(this.timeInterval[i]);
+        };
+        this.timeInterval=[];
         let mostrarVida = document.querySelector("#vidas")
         mostrarVida.innerHTML = juego.vidas;
         let mostrarPuntos = document.querySelector("#puntos")
