@@ -135,3 +135,10 @@ audio{
     display: block;
     font-size: 28px;
   }
+
+  #countdown{
+    border: 5px solid #f45775;
+    display: inline;
+    padding: 7px 15px;
+    
+  }

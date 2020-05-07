@@ -4,6 +4,7 @@
 <head>
     <title>Ice Cream Storm</title>
     <meta charset="utf-8">
+    <link rel="icon" href="imagenes/comodin2.png" sizes="16x16">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="styles/styles.css" />
 </head>
@@ -45,13 +46,20 @@
         <p>VIDAS: <span id="vidas"></span></p>
         <p>PUNTOS: <span id="puntos"></span></p>
         <p>NIVEL: <span id="nivel"></span></p>
-        <div id="countdown"></div>
+        <p id="countdown"></p>
     </div>
     <div>
         <canvas id="canvas" width="500" height="700"></canvas>
-        <audio id="audio" controls>
+        <audio id="audio1" controls>
             <source src="music/sonido.mp3">
         </audio>
+        <audio id="audio2" controls>
+            <source src="music/sonido.mp3">
+        </audio>
+        <audio id="audio3" controls>
+            <source src="music/sonido.mp3">
+        </audio>
+        
     </div>
 
     <div id="game-over">
@@ -60,9 +68,10 @@
         <button id="restart-button">Restart</button>
     </div>
     </div>
-
+    <script type="text/javascript" src="javascript/juego.js"></script>
     <script type="text/javascript" src="javascript/index.js"></script>
-
+    <script type="text/javascript" src="javascript/bolaDeHelado.js"></script>
+    <script type="text/javascript" src="javascript/cono.js"></script>
 
 
 </body>
