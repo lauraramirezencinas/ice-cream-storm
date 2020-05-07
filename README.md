@@ -31,7 +31,7 @@ El usuario tiene 3 vidas.
 ### Git
 Repositorio: https://github.com/lauraramirezencinas/juego.git
 ​
-//Deploy:
+Deploy: https://lauraramirezencinas.github.io/ice-cream-storm/
 ​
 ### Slides
  

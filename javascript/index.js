@@ -90,10 +90,10 @@ window.onload = () => {
         juego.tick();
     }
 
-    document.getElementById('restart-button').onclick = () => {
-        juego.reiniciar();
+    document.getElementById('restart-button').onclick = () => { 
+        let mostrarPuntosGanados = document.querySelector("#puntos-ganados")
+        mostrarPuntosGanados.innerHTML = juego.puntos;
         ocultarGameOver();
-        audio2.pause()
         audio1.play()
         juego.tick();
     }

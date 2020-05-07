@@ -5,7 +5,7 @@ const juego = {
     nivel: 0,
     contadorTick: 0,
     velocidad: 50,
-    vidas: 1,
+    vidas: 3,
     puntos: 0,
     frecuencia: 20,
     frecuenciaBolaComodin: 100,
@@ -158,11 +158,10 @@ const juego = {
         mostrarVida.innerHTML = juego.vidas;
 
         canvas.style.backgroundColor = "#f45775";
+        audio3.play();
         this.timeouts.push(setTimeout(function () {
             canvas.style.backgroundColor = "rgb(243, 233,198, 0.75)";
         }, 100));
-        audio1.pause();
-        audio3.play();
 
     },
 
@@ -195,7 +194,9 @@ const juego = {
         let mostrarPuntosGanados = document.querySelector("#puntos-ganados")
         mostrarPuntosGanados.innerHTML = juego.puntos;
         audio1.pause();
+        audio3.pause();
         audio2.play(); 
+        this.reiniciar();
 
     },
 
@@ -212,6 +213,7 @@ const juego = {
         for (var i = 0; i < this.timeouts.length; i++) {
             clearTimeout(this.timeouts[i]);
         }
+        canvas.style.backgroundColor = "rgb(243, 233,198, 0.75)";
         this.timeouts = [];
         clearInterval(juego.interval)
         let mostrarVida = document.querySelector("#vidas")
@@ -220,8 +222,6 @@ const juego = {
         mostrarPuntos.innerHTML = juego.puntos;
         let mostrarNivel = document.querySelector("#nivel")
         mostrarNivel.innerHTML = juego.nivel;
-        let mostrarPuntosGanados = document.querySelector("#puntos-ganados")
-        mostrarPuntosGanados.innerHTML = juego.puntos;
 
     }
 
