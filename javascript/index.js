@@ -56,8 +56,6 @@ let mostrarVida = document.querySelector("#vidas")
 mostrarVida.innerHTML = juego.vidas;
 let mostrarPuntos = document.querySelector("#puntos")
 mostrarPuntos.innerHTML = juego.puntos;
-let mostrarNivel = document.querySelector("#nivel")
-mostrarNivel.innerHTML = juego.nivel;
 let mostrarPuntosGanados = document.querySelector("#puntos-ganados")
 mostrarPuntosGanados.innerHTML = juego.puntos;
 

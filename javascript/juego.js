@@ -11,8 +11,8 @@ const juego = {
     frecuenciaBolaComodin: 100,
     comodinActivado: false,
     timeouts: [],
-    timeInterval:[],
-    comodinTimer: 5,
+
+
 
     //Incrementa el nivel y el numero de bolas creadas (frecuencia)
     incrementarNivel: function () {
@@ -23,8 +23,6 @@ const juego = {
                 juego.frecuencia -= 1;
             }
         }
-        let mostrarNivel = document.querySelector("#nivel")
-        mostrarNivel.innerHTML = juego.nivel;
     },
 
     //Crea bolas normales 
@@ -43,6 +41,7 @@ const juego = {
             juego.bolas.push(bolaComodin);
         }
     },
+
 
     //Incia el juego , limitando la velocidad de la caida de las bolas 
     tick: function () {
@@ -74,8 +73,6 @@ const juego = {
             bola.y = cono.y - 45 - (index * 30);
             bola.pintarBola();
         });
-        document.querySelector("#countdown").innerHTML = `0:0${juego.comodinTimer}`;
-
     },
 
     //Verifica si hay choque entre el cono y una bola de helado
@@ -128,16 +125,10 @@ const juego = {
                             bola.imagenBola = juego.color;
                         })
                         juego.comodinActivado = true;
-                        juego.comodinTimer = 5;
-                        juego.interval = setInterval(function () {
-                            juego.comodinTimer--;
-                            console.log(juego.comodinTimer)
-                        }, 1000);
-                        //this.timeInterval.push(juego.interval);
                         this.timeouts.push(setTimeout(function () {
                             juego.comodinActivado = false;
-                            clearInterval(juego.interval);
-                        }, 5000))
+                        }, 5000));
+
                     }
                 }
 
@@ -158,7 +149,6 @@ const juego = {
         juego.vidas -= 1;
         let mostrarVida = document.querySelector("#vidas")
         mostrarVida.innerHTML = juego.vidas;
-
         canvas.style.backgroundColor = "#f45775";
         audio3.play();
         this.timeouts.push(setTimeout(function () {
@@ -197,7 +187,7 @@ const juego = {
         mostrarPuntosGanados.innerHTML = juego.puntos;
         audio1.pause();
         audio3.pause();
-        audio2.play(); 
+        audio2.play();
         this.reiniciar();
 
     },
@@ -217,11 +207,6 @@ const juego = {
         }
         canvas.style.backgroundColor = "rgb(243, 233,198, 0.75)";
         this.timeouts = [];
-        this.comodinTimer= 5;
-        for (let i = 0; i < this.timeInterval.length; i++) {
-            clearInterval(this.timeInterval[i]);
-        };
-        this.timeInterval=[];
         let mostrarVida = document.querySelector("#vidas")
         mostrarVida.innerHTML = juego.vidas;
         let mostrarPuntos = document.querySelector("#puntos")
